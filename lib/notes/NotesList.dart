@@ -58,28 +58,15 @@ class NotesList extends StatelessWidget {
                     return Container(
                         padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
                         child: Slidable(
-                            endActionPane: ActionPane(
-                              motion: DrawerMotion(),
-                              children: [
-                                SlidableAction(
-                                  // An action can be bigger than the others.
-                                  flex: 2,
-                                  // onPressed: _deleteNote(inContext),
-                                  onPressed: null,
-                                  backgroundColor: Colors.red,
+                            actionPane: SlidableDrawerActionPane(),
+                            actionExtentRatio: .25,
+                            secondaryActions: [
+                              IconSlideAction(
+                                  caption: "Delete",
+                                  color: Colors.red,
                                   icon: Icons.delete,
-                                  label: 'Delete',
-                                )
-                              ],
-                            ),
-                            // actionExtentRatio: .25,
-                            // secondaryActions: [
-                            //   IconSlideAction(
-                            //       caption: "Delete",
-                            //       color: Colors.red,
-                            //       icon: Icons.delete,
-                            //       onTap: () => _deleteNote(inContext, note))
-                            // ],
+                                  onTap: () => _deleteNote(inContext, note))
+                            ],
                             child: Card(
                                 elevation: 8,
                                 color: color,
@@ -123,19 +110,19 @@ class NotesList extends StatelessWidget {
               title: Text("Delete Note"),
               content: Text("Are you sure you want to delete ${inNote.title}?"),
               actions: [
-                FlatButton(
+                TextButton(
                     child: Text("Cancel"),
                     onPressed: () {
                       // Just hide dialog.
                       Navigator.of(inAlertContext).pop();
                     }),
-                FlatButton(
+                TextButton(
                     child: Text("Delete"),
                     onPressed: () async {
                       // Delete from database, then hide dialog, show SnackBar, then re-load data for the list.
                       await NotesDBWorker.db.delete(inNote.id);
                       Navigator.of(inAlertContext).pop();
-                      Scaffold.of(inContext).showSnackBar(SnackBar(
+                      ScaffoldMessenger.of(inContext).showSnackBar(SnackBar(
                           backgroundColor: Colors.red,
                           duration: Duration(seconds: 2),
                           content: Text("Note deleted")));

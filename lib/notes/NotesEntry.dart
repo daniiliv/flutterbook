@@ -59,7 +59,7 @@ class NotesEntry extends StatelessWidget {
                       padding : EdgeInsets.symmetric(vertical : 0, horizontal : 10),
                       child : Row(
                           children : [
-                            FlatButton(
+                            TextButton(
                                 child : Text("Cancel"),
                                 onPressed : () {
                                   // Hide soft keyboard.
@@ -69,7 +69,7 @@ class NotesEntry extends StatelessWidget {
                                 }
                             ),
                             Spacer(),
-                            FlatButton(
+                            TextButton(
                                 child : Text("Save"),
                                 onPressed : () { _save(inContext, notesModel); }
                             )
@@ -256,7 +256,7 @@ class NotesEntry extends StatelessWidget {
     inModel.setStackIndex(0);
 
     // Show SnackBar.
-    Scaffold.of(inContext).showSnackBar(
+    ScaffoldMessenger.of(inContext).showSnackBar(
         SnackBar(
             backgroundColor : Colors.green,
             duration : Duration(seconds : 2),
