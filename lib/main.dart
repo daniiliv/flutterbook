@@ -4,9 +4,8 @@ import "package:path_provider/path_provider.dart";
 // import "appointments/Appointments.dart";
 // import "contacts/Contacts.dart";
 import "notes/Notes.dart";
-// import "tasks/Tasks.dart";
+import "tasks/Tasks.dart";
 import "utils.dart" as utils;
-
 
 /// Start it up!
 void main() {
@@ -42,7 +41,7 @@ class FlutterBook extends StatelessWidget {
 
     return MaterialApp(
         home : DefaultTabController(
-            length : 1,
+            length : 2,
             child : Scaffold(
                 appBar : AppBar(
                     title : Text("FlutterBook"),
@@ -51,7 +50,7 @@ class FlutterBook extends StatelessWidget {
                           // Tab(icon : Icon(Icons.date_range), text : "Appointments"),
                           // Tab(icon : Icon(Icons.contacts), text : "Contacts"),
                           Tab(icon : Icon(Icons.note), text : "Notes"),
-                          // Tab(icon : Icon(Icons.assignment_turned_in), text : "Tasks")
+                          Tab(icon : Icon(Icons.assignment_turned_in), text : "Tasks")
                         ] /* End TabBar.tabs. */
                     ) /* End TabBar. */
                 ), /* End AppBar. */
@@ -60,7 +59,7 @@ class FlutterBook extends StatelessWidget {
                       // Appointments(),
                       // Contacts(),
                       Notes(),
-                      // Tasks()
+                      Tasks()
                     ] /* End TabBarView.children. */
                 ) /* End TabBarView. */
             ) /* End Scaffold. */
