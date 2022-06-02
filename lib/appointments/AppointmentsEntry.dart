@@ -16,7 +16,7 @@ class AppointmentsEntry extends StatelessWidget {
       TextEditingController();
 
   // Key for form.
- static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   /// Constructor.
   AppointmentsEntry() {
@@ -55,35 +55,37 @@ class AppointmentsEntry extends StatelessWidget {
                 (BuildContext inContext, Widget inChild,
                     AppointmentsModel inModel) {
           return Scaffold(
-              appBar: CupertinoNavigationBar(
-                leading: CupertinoButton(
-                  child: Icon(CupertinoIcons.left_chevron),
-                  onPressed: () async {
-                    // Hide soft keyboard.
-                    FocusScope.of(inContext).requestFocus(FocusNode());
-                    // Go back to the list view.
-                    inModel.setStackIndex(0);
-                  },
-                  padding: EdgeInsets.zero,
-                ),
-                trailing: CupertinoButton(
-                  child: Text("Save"),
-                  onPressed: () {
-                    _save(inContext, appointmentsModel);
-                  },
-                  padding: EdgeInsets.zero,
-                ),
+            appBar: CupertinoNavigationBar(
+              leading: CupertinoButton(
+                child: Icon(CupertinoIcons.left_chevron),
+                onPressed: () async {
+                  // Hide soft keyboard.
+                  FocusScope.of(inContext).requestFocus(FocusNode());
+                  // Go back to the list view.
+                  inModel.setStackIndex(0);
+                },
+                padding: EdgeInsets.zero,
               ),
-              body: Form(
-                  key: _formKey,
-                  child: ListView(children: [
+              trailing: CupertinoButton(
+                child: Text("Save"),
+                onPressed: () {
+                  _save(inContext, appointmentsModel);
+                },
+                padding: EdgeInsets.zero,
+              ),
+            ),
+            body: CupertinoPageScaffold(
+              child: Form(
+                key: _formKey,
+                child: CupertinoFormSection.insetGrouped(
+                  children: [
                     // Title.
                     CupertinoTextFormFieldRow(
                         prefix: Icon(
                           CupertinoIcons.text_justifyleft,
                           color: Theme.of(inContext).hintColor,
                         ),
-                        placeholder: 'Title',
+                        placeholder: "Enter a title",
                         controller: _titleEditingController,
                         validator: (String inValue) {
                           if (inValue.length == 0) {
@@ -99,7 +101,7 @@ class AppointmentsEntry extends StatelessWidget {
                         ),
                         keyboardType: TextInputType.multiline,
                         maxLines: 4,
-                        placeholder: "Description",
+                        placeholder: "Enter a description",
                         controller: _descriptionEditingController),
                     // Appointment Date.
                     ListTile(
@@ -133,10 +135,12 @@ class AppointmentsEntry extends StatelessWidget {
                             icon: Icon(Icons.edit),
                             color: Colors.blue,
                             onPressed: () => _selectTime(inContext)))
-                  ] /* End Column children. */
-                      ) /* End ListView. */
-                  ) /* End Form. */
-              ); /* End Scaffold. */
+                  ], /* End Column children. */
+                ),
+              ), /* End ListView. */
+            ),
+            /* End Form. */
+          ); /* End Scaffold. */
         } /* End ScopedModelDescendant builder(). */
             ) /* End ScopedModelDescendant. */
         ); /* End ScopedModel. */
