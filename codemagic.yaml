@@ -1,0 +1,15 @@
+workflows:
+  ios-workflow:
+    name: iOS Workflow
+    environment:
+      vars:
+        XCODE_WORKSPACE: "Runner.xcworkspace"
+        XCODE_SCHEME: "Runner"               
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+    scripts:
+      - name: Build iOS unsigned   # for building iOS (.app)
+        script: |
+              flutter build ios --debug --no-codesign
+   
