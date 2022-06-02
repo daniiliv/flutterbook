@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import "package:flutter/material.dart";
 import 'package:flutter_slidable/flutter_slidable.dart';
 import "package:scoped_model/scoped_model.dart";
@@ -39,33 +40,38 @@ class AppointmentsList extends StatelessWidget {
         child: ScopedModelDescendant<AppointmentsModel>(
             builder: (inContext, inChild, inModel) {
           return Scaffold(
-              // Add appointment.
-              floatingActionButton: FloatingActionButton(
-                  child: Icon(Icons.add, color: Colors.white),
-                  onPressed: () async {
-                    appointmentsModel.entityBeingEdited = Appointment();
-                    DateTime now = DateTime.now();
-                    appointmentsModel.entityBeingEdited.apptDate =
-                        "${now.year},${now.month},${now.day}";
-                    appointmentsModel.setChosenDate(
-                        DateFormat.yMMMMd("en_US").format(now.toLocal()));
-                    appointmentsModel.setApptTime(null);
-                    appointmentsModel.setStackIndex(1);
-                  }),
-              body: Container(
-                  margin: EdgeInsets.symmetric(horizontal: 10),
-                  child: CalendarCarousel<Event>(
-                      thisMonthDayBorderColor: Colors.grey,
-                      daysHaveCircularBorder: false,
-                      markedDatesMap: _markedDateMap,
-                      onDayPressed: (DateTime inDate, List<Event> inEvents) {
-                        _showAppointments(inDate, inContext);
-                      }) /* End CalendarCarousel. */
-                  ) /* End Column. */
-              ); /* End Scaffold. */
-        } /* End ScopedModelDescendant builder(). */
-            ) /* End ScopedModelDescendant. */
-        ); /* End ScopedModel. */
+            appBar: CupertinoNavigationBar(
+              middle: Text('Appointments'),
+              trailing: CupertinoButton(
+                child: Icon(
+                  CupertinoIcons.add_circled_solid,
+                  color: Colors.green.shade600,
+                ),
+                onPressed: () async {
+                  appointmentsModel.entityBeingEdited = Appointment();
+                  DateTime now = DateTime.now();
+                  appointmentsModel.entityBeingEdited.apptDate =
+                      "${now.year},${now.month},${now.day}";
+                  appointmentsModel.setChosenDate(
+                      DateFormat.yMMMMd("en_US").format(now.toLocal()));
+                  appointmentsModel.setApptTime(null);
+                  appointmentsModel.setStackIndex(1);
+                },
+                padding: EdgeInsets.zero,
+              ),
+            ),
+            body: Container(
+                margin: EdgeInsets.symmetric(horizontal: 10),
+                child: CalendarCarousel<Event>(
+                    thisMonthDayBorderColor: Colors.grey,
+                    daysHaveCircularBorder: false,
+                    markedDatesMap: _markedDateMap,
+                    onDayPressed: (DateTime inDate, List<Event> inEvents) {
+                      _showAppointments(inDate, inContext);
+                    }) /* End CalendarCarousel. */
+                ),
+          );
+        }));
   }
 
   /* End build(). */
@@ -263,6 +269,4 @@ class AppointmentsList extends StatelessWidget {
               ]);
         });
   }
-/* End _deleteAppointment(). */
-
-} /* End class. */
+}

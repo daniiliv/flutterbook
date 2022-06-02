@@ -1,4 +1,5 @@
 import "dart:async";
+import 'package:flutter/cupertino.dart';
 import "package:flutter/material.dart";
 import "package:scoped_model/scoped_model.dart";
 import "../utils.dart" as utils;
@@ -54,48 +55,52 @@ class AppointmentsEntry extends StatelessWidget {
                 (BuildContext inContext, Widget inChild,
                     AppointmentsModel inModel) {
           return Scaffold(
-              bottomNavigationBar: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-                  child: Row(children: [
-                    TextButton(
-                        child: Text("Cancel"),
-                        onPressed: () {
-                          // Hide soft keyboard.
-                          FocusScope.of(inContext).requestFocus(FocusNode());
-                          // Go back to the list view.
-                          inModel.setStackIndex(0);
-                        }),
-                    Spacer(),
-                    TextButton(
-                        child: Text("Save"),
-                        onPressed: () {
-                          _save(inContext, appointmentsModel);
-                        })
-                  ])),
+              appBar: CupertinoNavigationBar(
+                leading: CupertinoButton(
+                  child: Icon(CupertinoIcons.left_chevron),
+                  onPressed: () async {
+                    // Hide soft keyboard.
+                    FocusScope.of(inContext).requestFocus(FocusNode());
+                    // Go back to the list view.
+                    inModel.setStackIndex(0);
+                  },
+                  padding: EdgeInsets.zero,
+                ),
+                trailing: CupertinoButton(
+                  child: Text("Save"),
+                  onPressed: () {
+                    _save(inContext, appointmentsModel);
+                  },
+                  padding: EdgeInsets.zero,
+                ),
+              ),
               body: Form(
                   key: _formKey,
                   child: ListView(children: [
                     // Title.
-                    ListTile(
-                        leading: Icon(Icons.subject),
-                        title: TextFormField(
-                            decoration: InputDecoration(hintText: "Title"),
-                            controller: _titleEditingController,
-                            validator: (String inValue) {
-                              if (inValue.length == 0) {
-                                return "Please enter a title";
-                              }
-                              return null;
-                            })),
+                    CupertinoTextFormFieldRow(
+                        prefix: Icon(
+                          CupertinoIcons.text_justifyleft,
+                          color: Theme.of(inContext).hintColor,
+                        ),
+                        placeholder: 'Title',
+                        controller: _titleEditingController,
+                        validator: (String inValue) {
+                          if (inValue.length == 0) {
+                            return "Please enter a title";
+                          }
+                          return null;
+                        }),
                     // Description.
-                    ListTile(
-                        leading: Icon(Icons.description),
-                        title: TextFormField(
-                            keyboardType: TextInputType.multiline,
-                            maxLines: 4,
-                            decoration:
-                                InputDecoration(hintText: "Description"),
-                            controller: _descriptionEditingController)),
+                    CupertinoTextFormFieldRow(
+                        prefix: Icon(
+                          CupertinoIcons.doc_text_fill,
+                          color: Theme.of(inContext).hintColor,
+                        ),
+                        keyboardType: TextInputType.multiline,
+                        maxLines: 4,
+                        placeholder: "Description",
+                        controller: _descriptionEditingController),
                     // Appointment Date.
                     ListTile(
                         leading: Icon(Icons.today),
