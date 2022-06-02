@@ -16,7 +16,7 @@ class AppointmentsEntry extends StatelessWidget {
       TextEditingController();
 
   // Key for form.
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+ static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   /// Constructor.
   AppointmentsEntry() {
