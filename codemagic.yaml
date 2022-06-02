@@ -1,12 +1,15 @@
-- name: Build Flutter module from the source
-  script: |
-    cd my_flutter_module
-    flutter pub get
-    flutter build ios --release --no-codesign
-    cd .ios
-    pod install          
-- name: Build host application
-  script: |
-    cd my_host_app
-    pod install
-    xcodebuild build -project "MyXcodeProject.xcodeproj" -scheme "MyXcodeScheme" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO      
+workflows:
+  ios-workflow:
+    name: iOS Workflow
+    environment:
+      vars:
+        XCODE_WORKSPACE: "Runner.xcworkspace"
+        XCODE_SCHEME: "Runner"               
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+    scripts:
+      - name: Build iOS unsigned   # for building iOS (.app)
+        script: |
+              flutter build ios --debug --no-codesign
+   
